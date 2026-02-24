@@ -240,7 +240,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: f9517356afb533a41b9e7cb6f155031e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -335,7 +335,7 @@ Transform:
   m_GameObject: {fileID: 159179950}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.12, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -356,6 +356,7 @@ MonoBehaviour:
   bpm: 120
   notePrefab: {fileID: 4934942335052507654, guid: cdef3c5446a00894ebd4ef9494aefb70, type: 3}
   spawnPoints:
+  - {fileID: 159179952}
   - {fileID: 159179952}
 --- !u!1 &1066116351
 GameObject:
@@ -387,6 +388,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f265ee7133754f47978ca507fecda57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JuiceManager
+  centerCore: {fileID: 1429574691}
+  shield: {fileID: 2012986196}
+  hitParticles: {fileID: 0}
+  punchScale: 0.2
+  shakeDuration: 0.1
+  shakeStrength: 0.3
 --- !u!114 &1066116353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,7 +435,6 @@ GameObject:
   - component: {fileID: 1429574691}
   - component: {fileID: 1429574690}
   - component: {fileID: 1429574689}
-  - component: {fileID: 1429574692}
   m_Layer: 3
   m_Name: Circle
   m_TagString: PlayerCore
@@ -547,20 +553,6 @@ Transform:
   - {fileID: 2012986196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1429574692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429574688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2d9e1bb7b73a74ca1c6ab0abce3f3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeflector
-  _shieldTransform: {fileID: 2012986196}
-  _hitParticles: {fileID: 0}
 --- !u!1 &2012986195
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +564,7 @@ GameObject:
   - component: {fileID: 2012986196}
   - component: {fileID: 2012986198}
   - component: {fileID: 2012986197}
+  - component: {fileID: 2012986199}
   m_Layer: 6
   m_Name: Shield
   m_TagString: Shield
@@ -699,6 +692,21 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &2012986199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012986195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef89c3757c17694469a29e3ff875d2b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDefender
+  centerCore: {fileID: 1429574691}
+  radius: 2
+  rotationSpeed: 15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

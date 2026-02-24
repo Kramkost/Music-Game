@@ -1,32 +1,17 @@
 using UnityEngine;
-using DG.Tweening;
-
 
 public class PlayerDefender : MonoBehaviour
 {
     [Header("Orbit Settings")]
     [SerializeField] private Transform centerCore; 
     [SerializeField] private float radius = 2f;    
-    [SerializeField] private float rotationSpeed = 25f; // Сделал побыстрее для отзывчивости мыши
+    [SerializeField] private float rotationSpeed = 25f;
 
     private float targetAngle = 90f; 
     private float currentAngle = 90f;
 
     private void Update()
     {
-
-        if (Input.GetMouseButtonDown(0)) 
-        {
-    // При нажатии щит слегка "вздувается", показывая готовность
-        transform.DOKill();
-        transform.DOScale(new Vector3(1.2f, 1.2f, 1f), 0.1f);
-        }
-         if (Input.GetMouseButtonUp(0))
-       {
-    // При отпускании возвращается в норму
-         transform.DOKill();
-         transform.DOScale(Vector3.one, 0.2f);
-       }
         // Если зажата левая кнопка мыши — обновляем целевой угол
         if (Input.GetMouseButton(0))
         {
