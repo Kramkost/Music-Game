@@ -10,23 +10,23 @@ public class NoteObject : MonoBehaviour
 
     private void Start()
     {
-        // Летим в центр (0,0,0). Ease.Linear обязателен для ритм-игр, чтобы игрок мог читать скорость!
+        
         transform.DOMove(Vector3.zero, approachDuration)
                  .SetEase(moveEase)
-                 .OnComplete(FailNote); // Если твин закончился и мы не столкнулись
+                 .OnComplete(FailNote); 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (((1 << collision.gameObject.layer) & shieldLayer) != 0)
         {
-            // Удар о щит - Успех
+            
             GameEventManager.OnNoteResolved?.Invoke(true);
             DestroyNote();
         }
         else if (((1 << collision.gameObject.layer) & coreLayer) != 0)
         {
-            // Удар о ядро - Провал
+            
             FailNote();
         }
     }
@@ -39,7 +39,7 @@ public class NoteObject : MonoBehaviour
 
     private void DestroyNote()
     {
-        transform.DOKill(); // Обязательно убиваем твин перед уничтожением
+        transform.DOKill(); 
         Destroy(gameObject);
     }
 }

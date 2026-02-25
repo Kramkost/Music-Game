@@ -10,7 +10,7 @@ public class RhythmSequencer : MonoBehaviour
     private AudioSource audioSource;
     private float beatInterval;
     private int lastBeatIndex = -1;
-    private bool isPlaying = false; // Флаг активности
+    private bool isPlaying = false; 
 
     private void Awake()
     {
@@ -32,12 +32,12 @@ public class RhythmSequencer : MonoBehaviour
     private void StartRhythm()
     {
         isPlaying = true;
-        audioSource.Play(); // Запускаем музыку только сейчас!
+        audioSource.Play(); 
     }
 
     private void Update()
     {
-        // Если игра не началась или музыка не играет — ничего не спавним
+        
         if (!isPlaying || !audioSource.isPlaying) return;
 
         float trackTime = (float)audioSource.timeSamples / audioSource.clip.frequency;

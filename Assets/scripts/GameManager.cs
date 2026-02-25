@@ -1,5 +1,5 @@
 using UnityEngine;
-using DG.Tweening; // Для анимации меню
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int totalStarsEarned = 0;
     
     [Header("UI Panels")]
-    [SerializeField] private CanvasGroup mainMenuPanel; // CanvasGroup нужен для плавного изменения прозрачности (Alpha)
+    [SerializeField] private CanvasGroup mainMenuPanel;
 
     private int combo = 0;
 
@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
         GameEventManager.OnGameStart -= () => currentState = GameState.Playing;
     }
 
-    // ЭТУ ФУНКЦИЮ МЫ ПОВЕСИМ НА КНОПКУ PLAY
+
     public void UI_StartGameButton()
     {
-        // Отключаем взаимодействие, чтобы игрок не спамил кнопку
+    
         mainMenuPanel.interactable = false; 
 
-        // DOTween: Плавно растворяем меню за 0.5 секунд
+       
         mainMenuPanel.DOFade(0f, 0.5f).OnComplete(() =>
         {
             mainMenuPanel.gameObject.SetActive(false); // Выключаем объект полностью

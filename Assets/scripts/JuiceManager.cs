@@ -25,26 +25,26 @@ public class JuiceManager : MonoBehaviour
         GameEventManager.OnBeatPulse -= HandleBeat;
     }
 
-private void HandleImpact(bool success)
+    private void HandleImpact(bool success)
     {
         if (success)
         {
-            // Сочный удар: щит пульсирует, камера немного трясется
+            
             shield.DORewind();
             shield.DOPunchScale(Vector3.one * punchScale, 0.2f, 5, 1f);
             
-            // ИСПРАВЛЕНО ЗДЕСЬ: обращаемся к transform и убираем лишние bool
+            
             Camera.main.transform.DOShakePosition(shakeDuration, shakeStrength, 10, 90f);
             
             if (hitParticles != null) hitParticles.Play();
         }
         else
         {
-            // Ошибка: Ядро сжимается и краснеет
+            
             centerCore.DORewind();
             centerCore.DOShakeScale(0.3f, 0.5f, 10, 90f);
             
-            // ИСПРАВЛЕНО ЗДЕСЬ: также добавлено обращение к transform
+           
             Camera.main.transform.DOShakePosition(0.3f, shakeStrength * 2f, 10, 90f); 
         }
     }
