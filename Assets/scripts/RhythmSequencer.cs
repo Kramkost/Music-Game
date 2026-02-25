@@ -4,7 +4,7 @@ using UnityEngine;
 public class RhythmSequencer : MonoBehaviour
 {
     [SerializeField] private float bpm = 120f;
-    [SerializeField] private GameObject notePrefab;
+    [SerializeField] private GameObject notePrefab; 
     [SerializeField] private Transform[] spawnPoints;
     
     private AudioSource audioSource;
@@ -20,7 +20,6 @@ public class RhythmSequencer : MonoBehaviour
 
     private void OnEnable()
     {
-        // Подписываемся на старт игры
         GameEventManager.OnGameStart += StartRhythm;
     }
 
@@ -37,7 +36,6 @@ public class RhythmSequencer : MonoBehaviour
 
     private void Update()
     {
-        
         if (!isPlaying || !audioSource.isPlaying) return;
 
         float trackTime = (float)audioSource.timeSamples / audioSource.clip.frequency;
@@ -54,6 +52,19 @@ public class RhythmSequencer : MonoBehaviour
     private void SpawnNote()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(notePrefab, spawnPoint.position, spawnPoint.rotation);
+        
+
+        GameObject spawnedNote = Instantiate(notePrefab, spawnPoint.position, spawnPoint.rotation);
+        
+
+        NoteObject noteObj = spawnedNote.GetComponent<NoteObject>();
+        if (noteObj != null)
+        {
+
+            int randomDirIndex = Random.Range(0, 5); 
+            
+ 
+            noteObj.Initialize((NoteObject.HitDirection)randomDirIndex);
+        }
     }
 }
