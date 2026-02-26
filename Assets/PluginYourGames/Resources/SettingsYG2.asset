@@ -130,6 +130,10 @@ MonoBehaviour:
       hi: 
   Localization:
     setLanguageMod: 1
+  Storage:
+    saveLocal: 0
+    saveCloud: 1
+    flush: 0
   Basic:
     platform: {fileID: 0}
     autoApplySettings: 1
@@ -185,6 +189,8 @@ MonoBehaviour:
     ownHost: 0
   platformToggles:
     setLanguageMod: 0
+    saveLocal: 0
+    saveCloud: 0
     autoPauseGame: 0
     selectWebGLTemplate: 1
     runInBackground: 1
