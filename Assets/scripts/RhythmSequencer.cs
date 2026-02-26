@@ -10,7 +10,7 @@ public class RhythmSequencer : MonoBehaviour
     private AudioSource audioSource;
     private float beatInterval;
     private int lastBeatIndex = -1;
-    private bool isPlaying = false; 
+    private bool isPlaying = false;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class RhythmSequencer : MonoBehaviour
     private void StartRhythm()
     {
         isPlaying = true;
-        audioSource.Play(); 
+        audioSource.Play();
     }
 
     private void Update()
