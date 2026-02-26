@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RhythmSequencer
   bpm: 200
-  notePrefab: {fileID: 0}
+  notePrefab: {fileID: 4934942335052507654, guid: cdef3c5446a00894ebd4ef9494aefb70, type: 3}
   spawnPoints:
   - {fileID: 159179952}
   - {fileID: 159179952}
