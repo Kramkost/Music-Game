@@ -180,8 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37d3eee6f3a433489f21b463a58247b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoteObject
+  initialType: 2
   approachDuration: 2
   moveEase: 1
+  requiredHoldTime: 0.35
   shieldLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -189,6 +191,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   arrowVisual: {fileID: 444729269698918378}
+  noteRenderer: {fileID: 2498046155898035895}
 --- !u!1 &7596323486917964112
 GameObject:
   m_ObjectHideFlags: 0
