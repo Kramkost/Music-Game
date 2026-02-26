@@ -619,24 +619,24 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
+    Android: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN
     Kepler: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    Nintendo Switch: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
+    LinuxHeadlessSimulation: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    Nintendo Switch: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
     Nintendo Switch 2: DOTWEEN
-    PS4: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    PS5: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
+    PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
     QNX: DOTWEEN
-    Standalone: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
+    Standalone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
     VisionOS: DOTWEEN
-    WebGL: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    Windows Store Apps: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    XboxOne: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    iPhone: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
-    tvOS: DOTWEEN;YandexGamesPlatform_yg;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg
+    WebGL: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    XboxOne: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    iPhone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
+    tvOS: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
