@@ -3,15 +3,6 @@
 НАЗНАЧЕНИЕ: Управляет поведением отдельной "ноты" (блока/препятствия) на сцене.
 Она летит к ядру, проверяет столкновения со щитом игрока и определяет успех/провал.
 
-НОВОВВЕДЕНИЯ И ЗВУКИ: 
-Теперь блоки умеют "звучать"! Добавлены массивы для рандомных звуков:
-1. spawnSounds - Звук при появлении (взводе) блока.
-2. successSounds - Звук при успешном отбивании/удержании.
-3. failSounds - Звук при ошибке/пропуске/смерти.
-
-Скрипт сам выберет случайный звук из массива. Мы используем PlayClipAtPoint, 
-чтобы звук успел доиграть до конца, даже если сам блок уже уничтожен!
-=============================================================================
 */
 
 using UnityEngine;
@@ -19,8 +10,8 @@ using DG.Tweening;
 
 public class NoteObject : MonoBehaviour
 {
-    
-    public enum NoteType { Def, Kill, Long }
+
+    public enum NoteType { Def, Kill, Long, Swipe }
     public enum HitDirection { Any, Top, Bottom, Left, Right }
 
 
@@ -30,41 +21,42 @@ public class NoteObject : MonoBehaviour
     [Header("Note Settings")]
     [SerializeField] private float approachDuration = 2f;
     [SerializeField] private Ease moveEase = Ease.Linear;
-    [SerializeField] private float requiredHoldTime = 0.5f; // Сколько секунд нужно держать Long-блок
+    [SerializeField] private float requiredHoldTime = 0.5f; 
+    
+    //Дистанция для Слайдера (насколько далеко нужно "провести" мечом)
+    [SerializeField] private float requiredSwipeDistance = 1.0f; 
 
     [Header("References")]
     [SerializeField] private LayerMask shieldLayer;
     [SerializeField] private LayerMask coreLayer;
     [SerializeField] private Transform arrowVisual; 
-    [SerializeField] private SpriteRenderer noteRenderer; // НОВОЕ: Ссылка на спрайт (чтобы менять цвет)
+    [SerializeField] private SpriteRenderer noteRenderer; 
 
-    // ==========================================
-    // НОВЫЕ НАСТРОЙКИ ЗВУКОВ
-    // ==========================================
     [Header("Audio Setup")]
-    [SerializeField] private AudioClip[] spawnSounds;   // Звуки при появлении
-    [SerializeField] private AudioClip[] successSounds; // Звуки при успехе
-    [SerializeField] private AudioClip[] failSounds;    // Звуки при ошибке
-    // ==========================================
+    [SerializeField] private AudioClip[] spawnSounds;   
+    [SerializeField] private AudioClip[] successSounds; 
+    [SerializeField] private AudioClip[] failSounds;    
 
     private HitDirection requiredHitDir = HitDirection.Any;
-    private NoteType currentType = NoteType.Def; // По умолчанию блок обычный
-    private float currentHoldTime = 0f; // Таймер для Long-блока
+    private NoteType currentType = NoteType.Def; 
+    private float currentHoldTime = 0f; 
+
+
+    private Vector2 swipeEntryPoint; 
+    private bool isSwiping = false;
 
     private void Start()
     {
-        //Change type of the note from inspector
         switch (initialType)
         {
             case NoteType.Def: changeToDef(); break;
             case NoteType.Kill: changeToKill(); break;
             case NoteType.Long: changeToLong(); break;
+            case NoteType.Swipe: changeToSwipe(); break;
         }
 
-        // ИГРАЕМ РАНДОМНЫЙ ЗВУК ПОЯВЛЕНИЯ
         PlayRandomSound(spawnSounds);
 
-        // Fly into player
         transform.DOMove(Vector3.zero, approachDuration)
                  .SetEase(moveEase)
                  .OnComplete(FailNote); 
@@ -83,23 +75,32 @@ public class NoteObject : MonoBehaviour
     public void changeToKill()
     {
         currentType = NoteType.Kill;
-        if (noteRenderer != null) noteRenderer.color = Color.red; // Красим в красный
-        if (arrowVisual != null) arrowVisual.gameObject.SetActive(false); // Убираем стрелку
+        if (noteRenderer != null) noteRenderer.color = Color.red; 
+        if (arrowVisual != null) arrowVisual.gameObject.SetActive(false); 
     }
 
     public void changeToDef()
     {
         currentType = NoteType.Def;
-        if (noteRenderer != null) noteRenderer.color = Color.white; // Обычный цвет
-        SetupArrowVisual(); // Возвращаем стрелку, если нужно
+        if (noteRenderer != null) noteRenderer.color = Color.white; 
+        SetupArrowVisual(); 
     }
 
     public void changeToLong()
     {
         currentType = NoteType.Long;
-        if (noteRenderer != null) noteRenderer.color = new Color(1f, 1f, 1f, 0.5f); // Делаем полупрозрачным (Alpha = 0.5)
-        if (arrowVisual != null) arrowVisual.gameObject.SetActive(false); // Убираем стрелку
-        currentHoldTime = 0f; // Сбрасываем таймер на всякий случай
+        if (noteRenderer != null) noteRenderer.color = new Color(1f, 1f, 1f, 0.5f); 
+        if (arrowVisual != null) arrowVisual.gameObject.SetActive(false); 
+        currentHoldTime = 0f; 
+    }
+
+    // НОВОЕ: Метод для Слайдера
+    public void changeToSwipe()
+    {
+        currentType = NoteType.Swipe;
+        if (noteRenderer != null) noteRenderer.color = Color.cyan; // Сделаем его голубым/бирюзовым для отличия
+        if (arrowVisual != null) arrowVisual.gameObject.SetActive(false); // Убираем стрелку (тут важно просто провести)
+        isSwiping = false;
     }
 
     // ==========================================
@@ -108,7 +109,6 @@ public class NoteObject : MonoBehaviour
     {
         if (arrowVisual == null) return;
 
-        // Если блок не дефолтный или направление Any — прячем стрелку
         if (requiredHitDir == HitDirection.Any || currentType != NoteType.Def)
         {
             arrowVisual.gameObject.SetActive(false); 
@@ -119,18 +119,10 @@ public class NoteObject : MonoBehaviour
 
         switch (requiredHitDir)
         {
-            case HitDirection.Right:
-                arrowVisual.localRotation = Quaternion.Euler(0, 0, 0f);
-                break;
-            case HitDirection.Top:
-                arrowVisual.localRotation = Quaternion.Euler(0, 0, 90f);
-                break;
-            case HitDirection.Left:
-                arrowVisual.localRotation = Quaternion.Euler(0, 0, 180f);
-                break;
-            case HitDirection.Bottom:
-                arrowVisual.localRotation = Quaternion.Euler(0, 0, -90f);
-                break;
+            case HitDirection.Right: arrowVisual.localRotation = Quaternion.Euler(0, 0, 0f); break;
+            case HitDirection.Top: arrowVisual.localRotation = Quaternion.Euler(0, 0, 90f); break;
+            case HitDirection.Left: arrowVisual.localRotation = Quaternion.Euler(0, 0, 180f); break;
+            case HitDirection.Bottom: arrowVisual.localRotation = Quaternion.Euler(0, 0, -90f); break;
         }
 
         arrowVisual.localScale = Vector3.zero;
@@ -140,40 +132,57 @@ public class NoteObject : MonoBehaviour
     // СРАБАТЫВАЕТ ПРИ ПЕРВОМ КАСАНИИ
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Касание со ЩИТОМ
         if (((1 << collision.gameObject.layer) & shieldLayer) != 0)
         {
             if (currentType == NoteType.Def)
             {
-                // Обычный блок: проверяем куда игрок махнул мышкой
                 CheckShieldHitDirection(collision.transform);
             }
             else if (currentType == NoteType.Kill)
             {
-                // Убийственный блок: трогать нельзя!
                 Debug.Log("СМЕРТЬ! Ты задел красный блок :(");
                 FailNote();
             }
-            // Если тип Long - ничего не делаем при первом касании, ждем удержания (ниже)
+            // НОВОЕ: Если это Слайдер, запоминаем точку, где игрок коснулся блока
+            else if (currentType == NoteType.Swipe)
+            {
+                swipeEntryPoint = collision.transform.position;
+                isSwiping = true;
+            }
         }
-        // Касание с ЯДРОМ (игрок пропустил)
         else if (((1 << collision.gameObject.layer) & coreLayer) != 0)
         {
             FailNote();
         }
     }
 
-    // СРАБАТЫВАЕТ ПОКА ЩИТ НАХОДИТСЯ ВНУТРИ БЛОКА (ДЛЯ LONG-ТИПА)
+    // СРАБАТЫВАЕТ ПОКА ЩИТ НАХОДИТСЯ ВНУТРИ БЛОКА
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (currentType == NoteType.Long && (((1 << collision.gameObject.layer) & shieldLayer) != 0))
+        if (((1 << collision.gameObject.layer) & shieldLayer) != 0)
         {
-            currentHoldTime += Time.deltaTime; // Копим время удержания
-            
-            if (currentHoldTime >= requiredHoldTime)
+            // Логика для Long-блока (удержание)
+            if (currentType == NoteType.Long)
             {
-                Debug.Log("Успех! Ты удержал прозрачный блок!");
-                SuccessNote();
+                currentHoldTime += Time.deltaTime; 
+                if (currentHoldTime >= requiredHoldTime)
+                {
+                    Debug.Log("Успех! Ты удержал прозрачный блок!");
+                    SuccessNote();
+                }
+            }
+            // НОВОЕ: Логика для Swipe-блока (проведение)
+            else if (currentType == NoteType.Swipe && isSwiping)
+            {
+                // Вычисляем дистанцию: как далеко игрок утянул щит от точки входа?
+                float distanceDragged = Vector2.Distance(swipeEntryPoint, collision.transform.position);
+                
+                // Если протащил достаточно далеко — рубим блок!
+                if (distanceDragged >= requiredSwipeDistance)
+                {
+                    Debug.Log("Успех! Ты разрезал слайдер!");
+                    SuccessNote();
+                }
             }
         }
     }
@@ -181,9 +190,17 @@ public class NoteObject : MonoBehaviour
     // СРАБАТЫВАЕТ ЕСЛИ ИГРОК УБРАЛ ЩИТ С БЛОКА ДОСРОЧНО
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (currentType == NoteType.Long && (((1 << collision.gameObject.layer) & shieldLayer) != 0))
+        if (((1 << collision.gameObject.layer) & shieldLayer) != 0)
         {
-            currentHoldTime = 0f; // Сбрасываем таймер удержания, если игрок убрал щит
+            if (currentType == NoteType.Long)
+            {
+                currentHoldTime = 0f; 
+            }
+            // Сбрасываем свайп, если игрок соскользнул с блока
+            else if (currentType == NoteType.Swipe)
+            {
+                isSwiping = false; 
+            }
         }
     }
 
@@ -209,28 +226,21 @@ public class NoteObject : MonoBehaviour
             else if (requiredHitDir == HitDirection.Right && velocity.x > threshold) isHitCorrect = true;
             else if (requiredHitDir == HitDirection.Left && velocity.x < -threshold) isHitCorrect = true;
 
-            if (isHitCorrect) 
-            {
-                SuccessNote();
-            }
+            if (isHitCorrect) SuccessNote();
             else 
             {
                 Debug.Log($"Мимо! Нужное направление: {requiredHitDir}, а мышка двигалась: {velocity}");
                 FailNote(); 
             }
         }
-        else
-        {
-            FailNote();
-        }
+        else FailNote();
     }
 
     private void SuccessNote()
     {
         if (currentType == NoteType.Def) Debug.Log("Ты Ударил в правильном направлении");
         
-        PlayRandomSound(successSounds); // ИГРАЕМ ЗВУК УСПЕХА
-        
+        PlayRandomSound(successSounds); 
         GameEventManager.OnNoteResolved?.Invoke(true);
         DestroyNote();
     }
@@ -239,8 +249,7 @@ public class NoteObject : MonoBehaviour
     {
         if (currentType == NoteType.Def) Debug.Log("Ты НЕ ударил в правильном направлении");
         
-        PlayRandomSound(failSounds); // ИГРАЕМ ЗВУК ПРОВАЛА
-        
+        PlayRandomSound(failSounds); 
         GameEventManager.OnNoteResolved?.Invoke(false);
         DestroyNote();
     }
@@ -251,18 +260,11 @@ public class NoteObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // ==========================================
-    // ВСПОМОГАТЕЛЬНЫЙ МЕТОД ДЛЯ ЗВУКОВ
-    // ==========================================
     private void PlayRandomSound(AudioClip[] clips)
     {
-        // Проверяем, есть ли вообще звуки в массиве
         if (clips != null && clips.Length > 0)
         {
-            // Выбираем случайный
             AudioClip randomClip = clips[Random.Range(0, clips.Length)];
-            
-            // Играем его на позиции камеры (чтобы всегда было хорошо слышно)
             if (Camera.main != null)
             {
                 AudioSource.PlayClipAtPoint(randomClip, Camera.main.transform.position);

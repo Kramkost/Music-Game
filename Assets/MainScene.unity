@@ -354,7 +354,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RhythmSequencer
   bpm: 200
-  notePrefab: {fileID: 4934942335052507654, guid: cdef3c5446a00894ebd4ef9494aefb70, type: 3}
+  notePrefabs:
+  - {fileID: 4934942335052507654, guid: cdef3c5446a00894ebd4ef9494aefb70, type: 3}
   spawnPoints:
   - {fileID: 159179952}
   - {fileID: 159179952}
@@ -394,6 +395,8 @@ MonoBehaviour:
   punchScale: 0.2
   shakeDuration: 0.1
   shakeStrength: 0.3
+  beatSounds: []
+  uiClickSounds: []
 --- !u!114 &1066116353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,6 +1114,7 @@ MonoBehaviour:
   centerCore: {fileID: 1429574691}
   radius: 2
   rotationSpeed: 15
+  swingSounds: []
 --- !u!1 &2030176907
 GameObject:
   m_ObjectHideFlags: 0
