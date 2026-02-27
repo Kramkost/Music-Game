@@ -525,6 +525,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Textureforgame_17
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 101
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d02c6245c07fd440858b8331995e0e8
+      internalID: 877414996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -548,6 +570,7 @@ TextureImporter:
       Textureforgame_14: 838568103
       Textureforgame_15: 699727702
       Textureforgame_16: -572900227
+      Textureforgame_17: 877414996
       Textureforgame_2: 60925398400879051
       Textureforgame_3: 7768998830513646434
       Textureforgame_4: -3258931671644257682
