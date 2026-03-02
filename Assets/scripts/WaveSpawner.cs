@@ -4,63 +4,47 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [SerializeField] private Waves[] _waves;
-    private int _currentEnemyIndex;
-    private int _currentWaveIndex;
-    private int _enemiesLeftToSpawn;
+    [Header("Настройки аудио")]
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private float _threshold = 0.5f; // Порог чувствительности (настраивай в инспекторе)
+    [SerializeField] private float _cooldown = 0.15f; // Минимальная пауза между блоками
 
-    private void Start()
-    {
-        _enemiesLeftToSpawn = _waves[0].WaveSettings.Length;
-        LaunchWave();
-    }
+    [Header("Настройки спавна")]
+    [SerializeField] private GameObject[] _enemyPrefabs;
+    [SerializeField] private Transform[] _spawnPoints;
 
-    private IEnumerator SpawnEnemyInWave()
+    private float[] _spectrum = new float[512]; // Массив для данных спектра
+    private float _timer;
+
+    private void Update()
     {
-        if(_enemiesLeftToSpawn > 0)
+        _timer += Time.deltaTime;
+
+        _audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+
+
+        float lowFreqIntensity = 0;
+        for (int i = 0; i < 7; i++)
         {
-            yield return new WaitForSeconds(_waves[_currentWaveIndex]
-                .WaveSettings[_currentEnemyIndex]
-                .SpawnDelay);
-            Instantiate(_waves[_currentWaveIndex]
-                .WaveSettings[_currentEnemyIndex].Enemy,
-                _waves[_currentWaveIndex].WaveSettings[_currentEnemyIndex]
-                .NeededSpawner.transform.position, Quaternion.identity);
-            _enemiesLeftToSpawn--;
-            _currentEnemyIndex++;
-            StartCoroutine(SpawnEnemyInWave());
+            lowFreqIntensity += _spectrum[i];
         }
-        else
+
+        
+        if (lowFreqIntensity > _threshold && _timer >= _cooldown)
         {
-            if (_currentWaveIndex < _waves.Length - 1)
-            {
-                _currentWaveIndex++;
-                _enemiesLeftToSpawn = _waves[_currentWaveIndex].WaveSettings.Length;
-                _currentEnemyIndex = 0;
-            }
+            SpawnBlock();
+            _timer = 0; 
         }
     }
 
-    public void LaunchWave()
+    private void SpawnBlock()
     {
-        StartCoroutine(SpawnEnemyInWave());
+        if (_spawnPoints.Length == 0 || _enemyPrefabs.Length == 0) return;
+
+        
+        Transform targetPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        GameObject prefab = _enemyPrefabs[Random.Range(0, _enemyPrefabs.Length)];
+
+        Instantiate(prefab, targetPoint.position, targetPoint.rotation);
     }
-}
-
-[System.Serializable]
-public class Waves 
-{
-    [SerializeField] private WaveSettings[] _waveSettings;
-    public WaveSettings[] WaveSettings { get => _waveSettings; }
-}
-
-[System.Serializable]
-public class WaveSettings
-{
-    [SerializeField] private GameObject _enemy;
-    public GameObject Enemy { get => _enemy; }
-    [SerializeField] private GameObject _neededSpawner;
-    public GameObject NeededSpawner { get => _neededSpawner; }
-    [SerializeField] private float _spawnDelay;
-    public float SpawnDelay { get => _spawnDelay; }
 }
