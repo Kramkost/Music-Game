@@ -9,6 +9,7 @@ TagManager:
   - PlayerCore
   - Shield
   - Enemy
+  - Face
   layers:
   - Default
   - TransparentFX
