@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class TestWaves : MonoBehaviour
 {
     private WaveSpawner _waveSpawner;
@@ -18,4 +18,4 @@ public class TestWaves : MonoBehaviour
         if (enemiesLeft == 0)
             _waveSpawner.LaunchWave();
     }
-}
+*/
