@@ -194,7 +194,8 @@ MonoBehaviour:
   arrowVisual: {fileID: 444729269698918378}
   noteRenderer: {fileID: 2498046155898035895}
   spawnSounds: []
-  successSounds: []
+  successSounds:
+  - {fileID: 8300000, guid: d3940243cca6ceeaaad6d6a25f01e919, type: 3}
   failSounds: []
 --- !u!1 &7596323486917964112
 GameObject:
