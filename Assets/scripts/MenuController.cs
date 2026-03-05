@@ -28,7 +28,6 @@ public class MenuController : MonoBehaviour
         public string sceneName;          
         public UnityEvent customEvent;    
 
-        // Скрываем в инспекторе, скрипт заполнит это сам
         [HideInInspector] public Vector3 originalScale; 
     }
 
@@ -49,12 +48,9 @@ public class MenuController : MonoBehaviour
         {
             if (item.button == null) continue;
 
-            // 1. Запоминаем изначальный размер конкретной кнопки
             item.originalScale = item.button.transform.localScale;
-
             item.button.onClick.AddListener(() => HandleClick(item));
             
-            // Передаем весь item, чтобы иметь доступ к его originalScale
             AddHoverEvents(item); 
         }
     }
@@ -66,11 +62,10 @@ public class MenuController : MonoBehaviour
             audioSource.PlayOneShot(clickSound);
         }
 
-        // 2. Умножаем оригинальный скейл на коэффициент клика
-        item.button.transform.DOScale(item.originalScale * clickScale, 0.1f).OnComplete(() =>
+        
+        item.button.transform.DOScale(item.originalScale * clickScale, 0.1f).SetUpdate(true).OnComplete(() =>
         {
-            // Возвращаем к оригинальному размеру (или размеру при наведении)
-            item.button.transform.DOScale(item.originalScale * hoverScale, 0.1f);
+            item.button.transform.DOScale(item.originalScale * hoverScale, 0.1f).SetUpdate(true);
             ExecuteAction(item);
         });
     }
@@ -95,16 +90,16 @@ public class MenuController : MonoBehaviour
                 break;
 
             case MenuActionType.CustomEvent:
-                item.customEvent?.Invoke();
                 break;
         }
+
+        item.customEvent?.Invoke();
     }
 
     void AddHoverEvents(MenuItem item)
     {
         Button btn = item.button;
         
-        // Безопасное добавление: проверяем, нет ли уже EventTrigger на объекте
         var trigger = btn.gameObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
         if (trigger == null)
         {
@@ -113,14 +108,14 @@ public class MenuController : MonoBehaviour
         
         var entryEnter = new UnityEngine.EventSystems.EventTrigger.Entry();
         entryEnter.eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter;
-        // 3. Увеличиваем относительно оригинального размера
-        entryEnter.callback.AddListener((data) => { btn.transform.DOScale(item.originalScale * hoverScale, animDuration); });
+  
+        entryEnter.callback.AddListener((data) => { btn.transform.DOScale(item.originalScale * hoverScale, animDuration).SetUpdate(true); });
         trigger.triggers.Add(entryEnter);
 
         var entryExit = new UnityEngine.EventSystems.EventTrigger.Entry();
         entryExit.eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit;
-        // 4. Возвращаем к оригинальному размеру
-        entryExit.callback.AddListener((data) => { btn.transform.DOScale(item.originalScale, animDuration); });
+        
+        entryExit.callback.AddListener((data) => { btn.transform.DOScale(item.originalScale, animDuration).SetUpdate(true); });
         trigger.triggers.Add(entryExit);
     }
 }

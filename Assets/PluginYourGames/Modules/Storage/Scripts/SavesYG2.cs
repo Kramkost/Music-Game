@@ -10,5 +10,9 @@ namespace YG
         public float sfxVolume = 1;
 
         public float musicVolume = 1;
+
+
+        public int maxCombo = 0;   
+        public int totalStars = 0;
     }
 }

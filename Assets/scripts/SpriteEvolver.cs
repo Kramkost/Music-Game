@@ -25,6 +25,8 @@ public class SpriteEvolver : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private int _currentSpriteIndex = -1;
     private bool _isDead = false;
+    
+    private Sprite _initialBaseSprite; 
 
  
     private Dictionary<AudioSource, float> _originalAudioPitches = new Dictionary<AudioSource, float>();
@@ -32,6 +34,7 @@ public class SpriteEvolver : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _initialBaseSprite = _spriteRenderer.sprite; 
         if (deathPanel != null) deathPanel.SetActive(false);
     }
 
@@ -120,6 +123,35 @@ public class SpriteEvolver : MonoBehaviour
 
         _spriteRenderer.sprite = baseSprite;
         transform.DOKill(true);
+        transform.DOPunchScale(Vector3.one * punchScaleForce, punchDuration, 5, 1f);
+    }
+
+  
+    public void AutoRevive()
+    {
+        _currentSpriteIndex = -1;
+        _isDead = false;
+        
+       
+        DOTween.KillAll();
+        Time.timeScale = 1f; 
+        AudioListener.volume = 1f;
+
+        
+        foreach (var kvp in _originalAudioPitches)
+        {
+            if (kvp.Key != null) 
+            {
+                kvp.Key.pitch = kvp.Value;
+            }
+        }
+        _originalAudioPitches.Clear();
+        
+     
+        if (deathPanel != null) deathPanel.SetActive(false);
+
+        
+        _spriteRenderer.sprite = _initialBaseSprite;
         transform.DOPunchScale(Vector3.one * punchScaleForce, punchDuration, 5, 1f);
     }
 }

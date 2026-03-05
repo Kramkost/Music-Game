@@ -128,8 +128,22 @@ MonoBehaviour:
       it: 
       de: 
       hi: 
+  InterstitialAdv:
+    showFirstAdv: 0
+    interAdvInterval: 60
+    postponeCallByFail: 0
+    postponeCallTimer: 10
+    labelAdvSimLabel: 0
   Localization:
     setLanguageMod: 1
+  Metrica:
+    enable: 0
+    metricaCounterID: 0
+    log: 1
+    useYandexMetrica: 1
+  RewardedAdv:
+    skipInterAdvAfterReward: 0
+    labelAdvSimLabel: 0
   Storage:
     saveLocal: 0
     saveCloud: 1
@@ -188,7 +202,13 @@ MonoBehaviour:
   platformInfo:
     ownHost: 0
   platformToggles:
+    showFirstAdv: 0
+    interAdvInterval: 0
+    postponeCallByFail: 0
     setLanguageMod: 0
+    useYandexMetrica: 0
+    metricaCounterID: 0
+    skipInterAdvAfterReward: 0
     saveLocal: 0
     saveCloud: 0
     autoPauseGame: 0
