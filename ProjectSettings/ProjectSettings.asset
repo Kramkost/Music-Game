@@ -144,7 +144,8 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -619,24 +620,24 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
+    Android: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN
     Kepler: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    Nintendo Switch: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
+    LinuxHeadlessSimulation: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    Nintendo Switch: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
     Nintendo Switch 2: DOTWEEN
-    PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
+    PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
     QNX: DOTWEEN
-    Standalone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
+    Standalone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
     VisionOS: DOTWEEN
-    WebGL: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    XboxOne: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    iPhone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
-    tvOS: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2
+    WebGL: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    XboxOne: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    iPhone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
+    tvOS: DOTWEEN;PLUGIN_YG_2;TMP_YG2;AutoTranslateLangs_yg;Localization_yg;Storage_yg;EnvirData_yg;RewardedAdv_yg;InterstitialAdv_yg;Metrica_yg;NJSON_YG2;Leaderboards_yg;Authorization_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

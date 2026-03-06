@@ -85,11 +85,10 @@ public class GameManager : MonoBehaviour
     // ==========================================
     // ЛОГИКА ПОБЕДЫ, ЗВЕЗД И СОХРАНЕНИЯ В ЯНДЕКС
     // ==========================================
-    private void HandleLevelComplete(int defaultStarsFromSpawner)
+private void HandleLevelComplete(int defaultStarsFromSpawner)
     {
         currentState = GameState.LevelComplete;
         
-
         if (levelCompletePanel != null) 
         {
             levelCompletePanel.SetActive(true);
@@ -97,20 +96,26 @@ public class GameManager : MonoBehaviour
             levelCompletePanel.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
         }
 
-
         int earnedStars = 0;
         if (maxComboInThisRun >= 30) earnedStars = 3;
         else if (maxComboInThisRun >= 15) earnedStars = 2;
         else if (maxComboInThisRun >= 5) earnedStars = 1;
 
+        // ==========================================
+        // ЗАПИСЬ РЕКОРДА И ОТПРАВКА В ЛИДЕРБОРД
+        // ==========================================
         if (maxComboInThisRun > YG2.saves.maxCombo)
         {
+            
             YG2.saves.maxCombo = maxComboInThisRun;
-            Debug.Log("Новый рекорд комбо: " + YG2.saves.maxCombo);
+            
+            
+            YG2.SetLeaderboard("MaxComboLB", maxComboInThisRun);
+            
+            Debug.Log("Новый рекорд комбо: " + YG2.saves.maxCombo + " отправлен в лидерборд!");
         }
 
         YG2.saves.totalStars += earnedStars;
-
 
         
         Debug.Log($"Уровень пройден! Получено звезд: {earnedStars}. Макс. комбо: {maxComboInThisRun}. Прогресс сохранен.");
