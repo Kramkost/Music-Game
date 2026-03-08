@@ -184,7 +184,7 @@ MonoBehaviour:
   approachDuration: 2
   moveEase: 1
   requiredHoldTime: 0.35
-  requiredSwipeDistance: 1
+  requiredSwipeDistance: 0.5
   shieldLayer:
     serializedVersion: 2
     m_Bits: 64

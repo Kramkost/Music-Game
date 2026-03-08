@@ -67,7 +67,7 @@ public class WaveSpawner : MonoBehaviour
         {
             lowFreqIntensity += _spectrum[i];
         }
-        
+        Debug.Log("Интенсивность баса: " + lowFreqIntensity);
         if (lowFreqIntensity > _threshold && _timer >= _cooldown)
         {
             SpawnBlock();
